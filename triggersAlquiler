@@ -1,8 +1,0 @@
-
-create trigger bi_alquila before insert on Alquila 
-for each row when (fechaInicial > fechaFinal ) 
-begin
- 	select RAISE(ABORT, "Fecha de inicio de contrato debe ser menor que la fecha final");
-end; 
-
-

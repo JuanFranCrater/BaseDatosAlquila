@@ -1,0 +1,162 @@
+drop trigger if exists BI_Alquila;
+
+
+create trigger BI_Alquila before insert on Alquila
+
+for each row
+
+begin
+
+
+	-- Cuando la fecha de entrada es mayor a la fecha de salida
+
+	SELECT CASE WHEN date(new.fechaD) >= date(new.fechaH) THEN
+
+		RAISE(Abort,'La fecha de entrada es posterior a la fecha de Salida.')
+
+	END;
+
+
+	-- Cuando hay una reserva existente para las fechas solicitadas
+
+	
+SELECT CASE WHEN exists (select * from Alquiler where new.idCasa=idCasa) and not exists (select * from alquila where (select date(new.fechaD)>date(fechaH) or date(new.fechaH) < date(fechaD))) then
+
+		RAISE(Abort,'Las fechas seleccionadas no estan disponibles')
+	END;
+
+
+end;
+
+drop trigger if exists BU_Alquila;
+
+create trigger BU_Alquila before update on Alquila
+
+for each row
+
+begin
+
+
+	-- Cuando la fecha de entrada es mayor a la fecha de salida
+
+	SELECT CASE WHEN date(new.fechaD) >= date(new.fechaH) THEN
+
+		RAISE(Abort,'La fecha de entrada es posterior a la fecha de Salida.')
+
+	END;
+
+end;
+
+drop trigger if exists BI_Arrendatario;
+
+create trigger BI_Arrendatario before insert on Arrendatario
+
+for each row
+
+begin
+
+	-- El nombre no puede contener numeros
+
+	
+SELECT CASE WHEN 
+new.nombre glob '*[0-9]*' then
+
+		RAISE(Abort,'El nombre no puede contener numeros')
+	END;
+	
+	-- El dni debe estar bien formado
+
+	SELECT CASE WHEN new.dni not GLOB '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z]' THEN
+
+		RAISE(abort,'Dni mal formado, (8 numeros y 1 letra mayuscula)')
+
+	END;
+	
+
+end;
+
+
+drop trigger if exists BI_Dueno;
+
+create trigger BI_Dueno before insert on Dueno
+
+for each row
+
+begin
+
+	-- El nombre no puede contener numeros
+
+	
+SELECT CASE WHEN 
+new.nombre glob '*[0-9]*' then
+
+		RAISE(Abort,'El nombre no puede contener numeros')
+	END;
+	
+	-- El dni debe estar bien formado
+
+	SELECT CASE WHEN new.dni not GLOB '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z]' THEN
+
+		RAISE(abort,'Dni mal formado, (8 numeros y 1 letra mayuscula)')
+
+	END;
+	
+
+end;
+
+drop trigger if exists  BU_Arrendatario;
+
+create trigger BU_Arrendatario before update on Arrendatario
+
+for each row
+
+begin
+
+	-- El nombre no puede contener numeros
+
+	
+SELECT CASE WHEN 
+new.nombre glob '*[0-9]*' then
+
+		RAISE(Abort,'El nombre no puede contener numeros')
+	END;
+	
+	-- El dni debe estar bien formado
+
+	SELECT CASE WHEN new.dni not GLOB '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z]' THEN
+
+		RAISE(abort,'Dni mal formado, (8 numeros y 1 letra mayuscula)')
+
+	END;
+	
+
+end;
+
+
+drop trigger if exists  BU_Dueno;
+
+create trigger BU_Dueno before update on Dueno
+
+for each row
+
+begin
+
+	-- El nombre no puede contener numeros
+
+	
+SELECT CASE WHEN 
+new.nombre glob '*[0-9]*' then
+
+		RAISE(Abort,'El nombre no puede contener numeros')
+	END;
+	
+	-- El dni debe estar bien formado
+
+	SELECT CASE WHEN new.dni not GLOB '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z]' THEN
+
+		RAISE(abort,'Dni mal formado, (8 numeros y 1 letra mayuscula)')
+
+	END;
+	
+
+end;
