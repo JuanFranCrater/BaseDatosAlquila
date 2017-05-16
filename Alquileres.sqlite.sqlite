@@ -1,17 +1,3 @@
-pragma foreign_key = 1;
-
-drop table if exists Alquila;
-drop table if exists AgendaDueno;
-drop table if exists AgendaArrendatario;
-drop table if exists Agenda;
-drop table if exists Casa;
-drop table if exists Dueno;
-drop table if exists Arrendatario;
-
-create table Arrendatario (
- dni TEXT primary key,
- nombre TEXT
-);
 
 PRAGMA foreign_keys=on;
 
