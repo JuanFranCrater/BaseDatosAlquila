@@ -1,0 +1,16 @@
+--1. Obtener los arrendatarios que alquilan la casa de calle Cómpeta, 28, 1C 
+	select * from arrendatario where dni in (select arrendatario from alquila where id = (select id from casa where direccion = "calle Cómpeta, 28, 1C "));
+--2. ¿Cuánto dinero le deben a María Pérez? 
+	select sum(deuda) from alquila where id in (select id from casa where dni =(select dni from dueno where nombre ="María Pérez"));
+--3. ¿Cuál es la deuda total para cada dueño? 
+	 ¿?
+--4. Listar todas las personas que hay dadas de alta en la base de datos. 
+	 select distinct dni from duenio union select distinct dni from arrendatario;
+--5. Indica los dueños que poseen tres o más casas (con / sin usar agregaciones) 
+	
+select * from duenio where dni in (select dni from casa group by dni having(count(*) >= 3));
+
+¿?
+		
+--6. Listar los dueños que tengan deudores en todas sus casas.
+	select * from dueno where dni in (select dni from casa where id in (select id from alquila where deuda >0));
